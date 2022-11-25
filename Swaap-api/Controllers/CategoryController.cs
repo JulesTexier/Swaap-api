@@ -28,7 +28,9 @@ namespace Swaap_api.Controllers
           {
               return NotFound();
           }
-            return await _context.Category.ToListAsync();
+            return await _context.Category
+                .Include(c => c.CatalogProducts)
+                .ToListAsync();
         }
 
         // GET: api/Category/5
