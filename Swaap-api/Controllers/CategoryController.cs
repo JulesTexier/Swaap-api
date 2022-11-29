@@ -48,7 +48,7 @@ namespace Swaap_api.Controllers
                 return NotFound();
             }
 
-            return category;
+            return Ok(category);
         }
 
         // PUT: api/Category/5

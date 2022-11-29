@@ -8,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+
+builder.Services.AddControllers().AddNewtonsoftJson();
 //builder.Services.AddDbContext<SwaapContext>(opt =>
 //    opt.UseInMemoryDatabase("SwaapDB"));
 
@@ -17,7 +18,7 @@ builder.Services.AddDbContext<SwaapContext>(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen().AddSwaggerGenNewtonsoftSupport();
 
 var app = builder.Build();
 

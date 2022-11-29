@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SwaapApi.Models;
 
 namespace Swaap_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/catalog")]
     [ApiController]
     public class CatalogProductController : ControllerBase
     {
@@ -20,7 +21,7 @@ namespace Swaap_api.Controllers
             _context = context;
         }
 
-        // GET: api/CatalogProduct
+         //GET: api/catalog
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CatalogProduct>>> GetCatalogProducts()
         {
@@ -31,7 +32,7 @@ namespace Swaap_api.Controllers
             return await _context.CatalogProducts.ToListAsync();
         }
 
-        // GET: api/CatalogProduct/5
+        // GET: api/catalog/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CatalogProduct>> GetCatalogProduct(long id)
         {
@@ -49,7 +50,7 @@ namespace Swaap_api.Controllers
             return catalogProduct;
         }
 
-        // PUT: api/CatalogProduct/5
+        // PUT: api/catalog/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCatalogProduct(long id, CatalogProduct catalogProduct)
@@ -80,7 +81,7 @@ namespace Swaap_api.Controllers
             return NoContent();
         }
 
-        // POST: api/CatalogProduct
+        // POST: api/catalog
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<CatalogProduct>> PostCatalogProduct(CatalogProduct catalogProduct)
@@ -95,7 +96,33 @@ namespace Swaap_api.Controllers
             return CreatedAtAction("GetCatalogProduct", new { id = catalogProduct.Id }, catalogProduct);
         }
 
-        // DELETE: api/CatalogProduct/5
+        // UPDATE: api/catalog/5
+
+        [HttpPatch ("{id}")]
+        public ActionResult Update(long id, JsonPatchDocument<CatalogProduct> catalogProductUpdates)
+        {
+            if (_context.CatalogProducts == null)
+            {
+                return NotFound();
+            }
+
+
+            var product = _context.CatalogProducts.FirstOrDefault(x=> x.Id == id);
+
+            if(product== null)
+            {
+                return NotFound();
+            }
+
+            catalogProductUpdates.ApplyTo(product);
+            _context.CatalogProducts.Update(product);
+            _context.SaveChanges();
+
+            return NoContent();
+
+        }
+
+        // DELETE: api/catalog/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCatalogProduct(long id)
         {
@@ -104,8 +131,7 @@ namespace Swaap_api.Controllers
                 return NotFound();
             }
             var catalogProduct = await _context.CatalogProducts.FindAsync(id);
-            if (catalogProduct == null)
-            {
+             {
                 return NotFound();
             }
 
