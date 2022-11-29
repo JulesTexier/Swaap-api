@@ -1,8 +1,7 @@
 ﻿using System;
 namespace SwaapApi.Models
 {
-	public class CatalogProduct
-	{
+	public class Catalog	{
         public long Id { get; set; } 
         public string? Name { get; set; }
         public int CategoryId { get; set; }
@@ -10,7 +9,7 @@ namespace SwaapApi.Models
 
 
 
-        public CatalogProduct()
+        public Catalog()
 		{
 
         }
