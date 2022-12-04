@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1705.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swaap-api", "Swaap-api.csproj", "{8E2DA267-D28D-42C7-BD05-22B0193B8B9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E2DA267-D28D-42C7-BD05-22B0193B8B9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2DA267-D28D-42C7-BD05-22B0193B8B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2DA267-D28D-42C7-BD05-22B0193B8B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2DA267-D28D-42C7-BD05-22B0193B8B9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4223F752-D0CA-4C61-B6BF-1E2C5F097F99}
+	EndGlobalSection
+EndGlobal

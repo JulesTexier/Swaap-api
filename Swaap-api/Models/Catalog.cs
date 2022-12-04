@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SwaapApi.Models
+namespace Swaap_api.Models
 {
 	public class Catalog	{
         public long Id { get; set; } 
@@ -7,6 +7,7 @@ namespace SwaapApi.Models
         public int CategoryId { get; set; }
         public string? Description { get; set; }
 
+        public ICollection<Product>? Products { get; set; }
 
 
         public Catalog()

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SwaapApi.Models;
+using Swaap_api.Models;
 
 namespace Swaap_api.Controllers
 {
@@ -22,33 +22,31 @@ namespace Swaap_api.Controllers
 
         // GET: api/Category
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-          if (_context.Category == null)
+          if (_context.Categories == null)
           {
               return NotFound();
           }
-            return await _context.Category
-                .Include(c => c.CatalogProducts)
-                .ToListAsync();
+            return await _context.Categories.ToListAsync();
         }
 
         // GET: api/Category/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
-          if (_context.Category == null)
+          if (_context.Categories == null)
           {
               return NotFound();
           }
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
 
             if (category == null)
             {
                 return NotFound();
             }
 
-            return Ok(category);
+            return category;
         }
 
         // PUT: api/Category/5
@@ -87,11 +85,11 @@ namespace Swaap_api.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(Category category)
         {
-          if (_context.Category == null)
+          if (_context.Categories == null)
           {
-              return Problem("Entity set 'SwaapContext.Category'  is null.");
+              return Problem("Entity set 'SwaapContext.Categories'  is null.");
           }
-            _context.Category.Add(category);
+            _context.Categories.Add(category);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
@@ -101,17 +99,17 @@ namespace Swaap_api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            if (_context.Category == null)
+            if (_context.Categories == null)
             {
                 return NotFound();
             }
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
             }
 
-            _context.Category.Remove(category);
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -119,7 +117,7 @@ namespace Swaap_api.Controllers
 
         private bool CategoryExists(int id)
         {
-            return (_context.Category?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

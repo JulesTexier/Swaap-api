@@ -1,8 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
-using SwaapApi.Models;
+using Swaap_api.Models;
 
-namespace SwaapApi.Models;
+namespace Swaap_api.Models;
 
 public class SwaapContext : DbContext
 {
@@ -13,6 +13,7 @@ public class SwaapContext : DbContext
 
     public DbSet<Catalog> Catalogs { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<Product> Products { get; set; } = null!;
+    public DbSet<Swaap_api.Models.User> Users { get; set; } = null!;
 
-    public DbSet<SwaapApi.Models.Category> Category { get; set; } = default!;
 }

@@ -1,12 +1,12 @@
 ﻿using System;
-namespace SwaapApi.Models
+namespace Swaap_api.Models
 {
 	public class Category
 	{
         public int Id { get; set; }
         public string? Name { get; set; }
 
-        public ICollection<Catalog> CatalogProducts { get; set; }
+        public ICollection<Catalog>? Catalogs { get; set; }
 
         public Category()
 		{

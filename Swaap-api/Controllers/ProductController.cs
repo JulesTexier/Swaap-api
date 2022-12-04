@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,56 +11,55 @@ namespace Swaap_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CatalogController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly SwaapContext _context;
 
-        public CatalogController(SwaapContext context)
+        public ProductController(SwaapContext context)
         {
             _context = context;
         }
 
-        // GET: api/Catalog
+        // GET: api/Product
         [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<Catalog>>> GetCatalogs()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-          if (_context.Catalogs == null)
+          if (_context.Products == null)
           {
               return NotFound();
           }
-            return await _context.Catalogs.ToListAsync();
+            return await _context.Products.ToListAsync();
         }
 
-        // GET: api/Catalog/5
+        // GET: api/Product/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Catalog>> GetCatalog(long id)
+        public async Task<ActionResult<Product>> GetProduct(int id)
         {
-          if (_context.Catalogs == null)
+          if (_context.Products == null)
           {
               return NotFound();
           }
-            var catalog = await _context.Catalogs.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
 
-            if (catalog == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return catalog;
+            return product;
         }
 
-        // PUT: api/Catalog/5
+        // PUT: api/Product/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCatalog(long id, Catalog catalog)
+        public async Task<IActionResult> PutProduct(int id, Product product)
         {
-            if (id != catalog.Id)
+            if (id != product.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(catalog).State = EntityState.Modified;
+            _context.Entry(product).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +67,7 @@ namespace Swaap_api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CatalogExists(id))
+                if (!ProductExists(id))
                 {
                     return NotFound();
                 }
@@ -82,44 +80,44 @@ namespace Swaap_api.Controllers
             return NoContent();
         }
 
-        // POST: api/Catalog
+        // POST: api/Product
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Catalog>> PostCatalog(Catalog catalog)
+        public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-          if (_context.Catalogs == null)
+          if (_context.Products == null)
           {
-              return Problem("Entity set 'SwaapContext.Catalogs'  is null.");
+              return Problem("Entity set 'SwaapContext.Products'  is null.");
           }
-            _context.Catalogs.Add(catalog);
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCatalog", new { id = catalog.Id }, catalog);
+            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
-        // DELETE: api/Catalog/5
+        // DELETE: api/Product/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCatalog(long id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
-            if (_context.Catalogs == null)
+            if (_context.Products == null)
             {
                 return NotFound();
             }
-            var catalog = await _context.Catalogs.FindAsync(id);
-            if (catalog == null)
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
             {
                 return NotFound();
             }
 
-            _context.Catalogs.Remove(catalog);
+            _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CatalogExists(long id)
+        private bool ProductExists(int id)
         {
-            return (_context.Catalogs?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
