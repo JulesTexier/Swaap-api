@@ -23,7 +23,6 @@ namespace Swaap_api.Controllers
 
         // GET: api/Catalog
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Catalog>>> GetCatalogs()
         {
           if (_context.Catalogs == null)
