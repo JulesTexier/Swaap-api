@@ -6,7 +6,7 @@ namespace Swaap_api.Models
         public int? Id { get; set; }
         public string? Name { get; set; }
 
-        //public ICollection<Catalog>? Catalogs { get; set; }
+        public ICollection<CatalogItem>? CatalogItems { get; set; }
 
 	}
 }

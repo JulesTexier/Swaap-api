@@ -28,7 +28,12 @@ namespace Swaap_api.Controllers
           {
               return NotFound();
           }
-            return await _context.Categories.ToListAsync();
+
+            var categories = await _context.Categories
+                  .Include(c => c.CatalogItems)
+                  .ToListAsync();
+
+            return categories;
         }
 
         // GET: api/Category/5
@@ -39,7 +44,9 @@ namespace Swaap_api.Controllers
           {
               return NotFound();
           }
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories
+                .Include(c => c.CatalogItems)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (category == null)
             {
