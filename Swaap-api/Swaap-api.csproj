@@ -27,6 +27,7 @@
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.4.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +44,7 @@
     <None Remove="Controllers\" />
     <None Remove="Models\DTO\" />
     <None Remove="Migrations\" />
+    <None Remove="Microsoft.AspNet.WebApi.Cors" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

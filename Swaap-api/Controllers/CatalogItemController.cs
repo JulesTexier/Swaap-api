@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,11 @@ namespace Swaap_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CatalogController : ControllerBase
+    public class CatalogItemController : ControllerBase
     {
         private readonly SwaapContext _context;
 
-        public CatalogController(SwaapContext context)
+        public CatalogItemController(SwaapContext context)
         {
             _context = context;
         }
