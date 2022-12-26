@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,102 +22,112 @@ namespace Swaap_api.Controllers
 
         // GET: api/Catalog
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Catalog>>> GetCatalogs()
+        public async Task<ActionResult<IEnumerable<CatalogItemDTO>>> GetCatalogItems()
         {
-          if (_context.Catalogs == null)
-          {
-              return NotFound();
-          }
-            return await _context.Catalogs.ToListAsync();
+
+            return await _context.CatalogItems
+                .Select(x => ItemToDTO(x))
+                .ToListAsync();
         }
 
         // GET: api/Catalog/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Catalog>> GetCatalog(long id)
+        public async Task<ActionResult<CatalogItemDTO>> GetCatalogItem(int? id)
         {
-          if (_context.Catalogs == null)
-          {
-              return NotFound();
-          }
-            var catalog = await _context.Catalogs.FindAsync(id);
+            var catalogItem = await _context.CatalogItems.FindAsync(id);
 
-            if (catalog == null)
+            if (catalogItem == null)
             {
                 return NotFound();
             }
 
-            return catalog;
+            return ItemToDTO(catalogItem);
         }
 
         // PUT: api/Catalog/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCatalog(long id, Catalog catalog)
+        public async Task<IActionResult> PutCatalogItem(int? id, CatalogItemDTO catalogDTO)
         {
-            if (id != catalog.Id)
+            if (id != catalogDTO.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(catalog).State = EntityState.Modified;
+            var catalogItem = await _context.CatalogItems.FindAsync(id);
+
+            if (catalogItem == null)
+            {
+                return NotFound();
+            }
+
+            catalogItem.Name = catalogDTO.Name;
+            catalogItem.Id = catalogDTO.Id;
+
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) when (!CatalogItemExists(id))
             {
-                if (!CatalogExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
         }
+
 
         // POST: api/Catalog
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Catalog>> PostCatalog(Catalog catalog)
+        public async Task<ActionResult<CatalogItemDTO>> PostCatalogItem(CatalogItemDTO catalogDTO)
         {
-          if (_context.Catalogs == null)
-          {
-              return Problem("Entity set 'SwaapContext.Catalogs'  is null.");
-          }
-            _context.Catalogs.Add(catalog);
+
+            var catalogItem = new CatalogItem
+            {
+                Name = catalogDTO.Name,
+                Id = catalogDTO.Id
+            };
+
+            _context.CatalogItems.Add(catalogItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCatalog", new { id = catalog.Id }, catalog);
+            return CreatedAtAction(
+                nameof(GetCatalogItem),
+                new { id = catalogItem.Id },
+                ItemToDTO(catalogItem));
+            ;
         }
 
         // DELETE: api/Catalog/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCatalog(long id)
+        public async Task<IActionResult> DeleteCatalogItem(int? id)
         {
-            if (_context.Catalogs == null)
-            {
-                return NotFound();
-            }
-            var catalog = await _context.Catalogs.FindAsync(id);
-            if (catalog == null)
+            var catalogItem = await _context.CatalogItems.FindAsync(id);
+
+            if (catalogItem == null)
             {
                 return NotFound();
             }
 
-            _context.Catalogs.Remove(catalog);
+            _context.CatalogItems.Remove(catalogItem);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CatalogExists(long id)
+        private bool CatalogItemExists(int? id)
         {
-            return (_context.Catalogs?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.CatalogItems?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        private static CatalogItemDTO ItemToDTO(CatalogItem catalogItem) =>
+            new CatalogItemDTO
+            {
+                Id = catalogItem.Id,
+                Name = catalogItem.Name
+
+            };
     }
 }

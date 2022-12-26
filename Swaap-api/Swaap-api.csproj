@@ -38,13 +38,17 @@
     <None Remove="Microsoft.AspNetCore.JsonPatch" />
     <None Remove="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
     <None Remove="Swashbuckle.AspNetCore.Newtonsoft" />
-    <None Remove="Migrations\" />
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <None Remove="Autofac.Mvc4" />
+    <None Remove="Controllers\" />
+    <None Remove="Models\DTO\" />
+    <None Remove="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\DTO\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

@@ -11,9 +11,8 @@ public class SwaapContext : DbContext
     {
     }
 
-    public DbSet<Catalog> Catalogs { get; set; } = null!;
+    public DbSet<CatalogItem> CatalogItems { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
-    public DbSet<Product> Products { get; set; } = null!;
-    public DbSet<Swaap_api.Models.User> Users { get; set; } = null!;
+
 
 }
